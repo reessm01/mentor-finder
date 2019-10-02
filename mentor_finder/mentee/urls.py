@@ -4,7 +4,7 @@ from .models import Mentee
 
 from .views import login_view, register_view
 
-admin.register(Mentee)
+admin.site.register(Mentee)
 
 url_patterns = [
     path('login/', login_view, name='login'),
