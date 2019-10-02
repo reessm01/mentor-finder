@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from .forms import LoginForm, RegisterForm
 from mentor_finder.site_user.models import SiteUser, Personality
+from mentor_finder.industry.models import Industry
 
 def login_view(request, *args, **kwargs):
     if request.method == 'GET':
@@ -66,9 +67,12 @@ def register_view(request, *args, **kwargs):
             )
 
             personality = Personality.objects.get(title=data['personality'])
+            industry = Industry.objects.get(title=data['industry'])
             site_user = SiteUser.objects.create(
                 user=u,
                 personality=personality,
+                industry=industry,
                 is_mentor=data['is_mentor']
             )
+
             return HttpResponseRedirect(reverse('login'))

@@ -74,7 +74,6 @@ class Command(BaseCommand):
         }
 
         added = []
-        print(personalities.keys())
         try:
             for key in personalities.keys():
                 Personality.objects.create(
@@ -82,7 +81,7 @@ class Command(BaseCommand):
                     detail=personalities[key]['detail']
                 )
 
-            added.append(key)
+                added.append(key)
 
         except IntegrityError:
             pass
