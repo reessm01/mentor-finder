@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from .forms import LoginForm, RegisterForm
-from .models import Mentee
+from mentor_finder.site_user.models import SiteUser, Personality
 
 def login_view(request, *args, **kwargs):
     if request.method == 'GET':
@@ -17,7 +17,7 @@ def login_view(request, *args, **kwargs):
             
             return render(request, page, {'user': user,'form': form, 'button_label': button_label})
         else:
-            return HttpResponseRedirect(reverse('homepage'))
+            return HttpResponseRedirect(reverse('login'))
     
     elif request.method == 'POST':
         form = LoginForm(request.POST)
@@ -57,14 +57,18 @@ def register_view(request, *args, **kwargs):
 
     elif request.method == 'POST':
         form = RegisterForm(request.POST)
-        if User.objects.filter(username=request.POST['username']).count() == 0 and form.is_valid():
+        if form.is_valid():
             data = form.cleaned_data
             u = User.objects.create_user(
                 username=data['username'],
                 password=data['password'],
                 email=data['email']
             )
-            Mentee.objects.create(
+
+            personality = Personality.objects.get(title=data['personality'])
+            site_user = SiteUser.objects.create(
                 user=u,
+                personality=personality,
+                is_mentor=data['is_mentor']
             )
-            return HttpResponseRedirect(reverse('homepage'))
+            return HttpResponseRedirect(reverse('login'))
