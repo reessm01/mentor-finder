@@ -10,6 +10,7 @@ class Goal(models.Model):
 
 class Mentee(models.Model):
     name = models.CharField(max_length=35)
+    headline = models.TextField(max_length=280)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo_link = models.CharField(max_length=255)
     personality = models.ForeignKey(Personality)
