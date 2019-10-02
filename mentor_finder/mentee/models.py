@@ -15,7 +15,7 @@ class Mentee(models.Model):
     personality = models.ForeignKey(Personality)
     goals = models.ForeignKey(Goal, verbose_name='Goals')
     mentors = models.ManyToManyField(Mentor)
-    messages = models.ForeignKey(Message)
+    messages = models.ManyToManyField(Message)
 
     def __str__(self):
         return self.name
