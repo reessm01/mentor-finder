@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
+{% block content %}
+    <div class="card text-center bg-dark" style="color: white">
+        <div class="card-header">
+            Assigned Goals
+        </div>
+    </div>
+    <div class="accordion" id="accordionExample">
+    {% for goal in goals %}
+        <div class="card border rounded">
+            <div class="card-header" id="heading{{goal.id}}">
+            <h2 class="mb-0">
+                <button 
+                    class="btn btn-link"
+                    type="button" 
+                    data-toggle="collapse"
+                    data-target="#collapse{{goal.id}}"
+                    aria-expanded="false"
+                    aria-controls="collapse{{goal.id}}">
+                {{ goal.title }}
+                </button>
+            </h2>
+            </div>
+
+            <div id="collapse{{goal.id}}" class="collapse" aria-labelledby="heading{{goal.id}}" data-parent="#accordionExample">
+                <div class="card-body">
+                    {{ goal.text }}
+                    {% for task in goal.tasks.all %}
+                        {{task.text}}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

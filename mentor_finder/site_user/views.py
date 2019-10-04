@@ -38,7 +38,7 @@ def login_view(request, *args, **kwargs):
             destination = request.GET.get('next')
             if destination:
                 return HttpResponseRedirect(destination)
-            return HttpResponseRedirect(reverse('homepage'))
+            return HttpResponseRedirect(reverse('dashboard'))
     else:
         return HttpResponseRedirect(reverse('homepage'))
 
